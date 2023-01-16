@@ -15,12 +15,15 @@ import java.util.UUID;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
     private Long id;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String code = UUID.randomUUID().toString().replace("-", "");
-
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String description;
+    @Column(nullable = false)
     private String price;
+    @Column(nullable = false)
+    private String imagePath;
 }

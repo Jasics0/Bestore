@@ -11,19 +11,22 @@ public class Enterprise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true,nullable = false)
     private String nit;
+    @Column(nullable = false)
     private String name;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name ="id_person", referencedColumnName = "id_person")
     private Person person;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name ="email_user", referencedColumnName = "email")
     private User user;
 
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Product> products;
-
+    @Column(nullable = false)
     private String location;
+    @Column(nullable = false)
+    private String imagePath;
+    @Column(nullable = false,length = 10)
+    private String phone;
 }
