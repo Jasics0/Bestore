@@ -1,4 +1,4 @@
-package com.unillanos.software3.bestore.Repository;
+package com.unillanos.software3.bestore.repositories;
 
 import com.unillanos.software3.bestore.model.entities.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;

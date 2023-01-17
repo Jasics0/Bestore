@@ -1,4 +1,4 @@
-package com.unillanos.software3.bestore.Service;
+package com.unillanos.software3.bestore.services.interfaces;
 
 import com.unillanos.software3.bestore.model.entities.Product;
 

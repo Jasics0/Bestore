@@ -1,13 +1,14 @@
-package com.unillanos.software3.bestore.Service;
+package com.unillanos.software3.bestore.services.implementation;
 
-import com.unillanos.software3.bestore.Repository.ProductRepo;
+import com.unillanos.software3.bestore.repositories.ProductRepo;
 import com.unillanos.software3.bestore.model.entities.Product;
+import com.unillanos.software3.bestore.services.interfaces.ProductRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class ProductRepoServiceImpl implements ProductRepoService{
+public class ProductRepoServiceImpl implements ProductRepoService {
     @Autowired
     private ProductRepo productRepo;
 

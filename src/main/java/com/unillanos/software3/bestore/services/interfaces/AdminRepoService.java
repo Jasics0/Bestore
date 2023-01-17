@@ -1,7 +1,6 @@
-package com.unillanos.software3.bestore.Service;
+package com.unillanos.software3.bestore.services.interfaces;
 
 import com.unillanos.software3.bestore.model.entities.Admin;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

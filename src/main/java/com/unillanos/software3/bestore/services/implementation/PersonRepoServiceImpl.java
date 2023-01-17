@@ -1,14 +1,15 @@
-package com.unillanos.software3.bestore.Service;
+package com.unillanos.software3.bestore.services.implementation;
 
-import com.unillanos.software3.bestore.Repository.PersonRepo;
+import com.unillanos.software3.bestore.repositories.PersonRepo;
 import com.unillanos.software3.bestore.model.entities.Person;
+import com.unillanos.software3.bestore.services.interfaces.PersonRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class PersonRepoServiceImpl  implements PersonRepoService{
+public class PersonRepoServiceImpl  implements PersonRepoService {
 
     @Autowired
     private PersonRepo personRepo;

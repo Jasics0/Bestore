@@ -1,14 +1,15 @@
-package com.unillanos.software3.bestore.Service;
+package com.unillanos.software3.bestore.services.implementation;
 
-import com.unillanos.software3.bestore.Repository.AdminRepo;
+import com.unillanos.software3.bestore.repositories.AdminRepo;
 import com.unillanos.software3.bestore.model.entities.Admin;
+import com.unillanos.software3.bestore.services.interfaces.AdminRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class AdminRepoSeriviceImpl implements AdminRepoService{
+public class AdminRepoSeriviceImpl implements AdminRepoService {
 
     @Autowired
     private AdminRepo adminRepo;
