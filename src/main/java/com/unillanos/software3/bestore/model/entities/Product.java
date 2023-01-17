@@ -17,10 +17,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true, nullable = false)
-    private String code = UUID.randomUUID().toString().replace("-", "");
+    private String code;// UUID.randomUUID().toString().replace("-", "");
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1500)
     private String description;
     @Column(nullable = false)
     private String price;

@@ -8,6 +8,7 @@ public class BestoreApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BestoreApplication.class, args);
+
 	}
 
 }
