@@ -2,6 +2,7 @@ package com.unillanos.software3.bestore.Service;
 
 import com.unillanos.software3.bestore.model.entities.Enterprise;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface EnterpriseRepoService {

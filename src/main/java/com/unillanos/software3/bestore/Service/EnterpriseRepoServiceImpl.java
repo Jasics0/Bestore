@@ -5,6 +5,7 @@ import com.unillanos.software3.bestore.model.entities.Enterprise;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,7 +16,7 @@ public class EnterpriseRepoServiceImpl implements EnterpriseRepoService {
 
     @Override
     public List<Enterprise> findAllEnterprises() {
-        return enterpriseRepo.findAll();
+        return  enterpriseRepo.findAll();
     }
 
     @Override
