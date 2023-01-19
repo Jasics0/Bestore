@@ -5,8 +5,7 @@ import lombok.*;
 
 import java.util.UUID;
 
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Setter
 @Getter
 @Entity
@@ -25,4 +24,16 @@ public class Product {
     private String price;
     @Column(nullable = false)
     private String imagePath;
+
+    public Product(Long id, String code, String name, String description, String price, String imagePath) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.imagePath = imagePath;
+    }
+
+    public Product() {
+    }
 }

@@ -4,7 +4,7 @@ import com.unillanos.software3.bestore.model.enums.Role;
 import com.unillanos.software3.bestore.repositories.UserRepo;
 import com.unillanos.software3.bestore.model.entities.User;
 import com.unillanos.software3.bestore.services.interfaces.UserRepoService;
-import com.unillanos.software3.bestore.web.controller.transfer.dto.UserDTO;
+import com.unillanos.software3.bestore.web.controller.transfer.dto.user.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

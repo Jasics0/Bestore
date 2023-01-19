@@ -2,7 +2,7 @@ package com.unillanos.software3.bestore.web.controller.site;
 
 import com.unillanos.software3.bestore.model.entities.User;
 import com.unillanos.software3.bestore.services.interfaces.UserRepoService;
-import com.unillanos.software3.bestore.web.controller.transfer.dto.UserDTO;
+import com.unillanos.software3.bestore.web.controller.transfer.dto.user.UserDTO;
 import com.unillanos.software3.bestore.web.controller.transfer.responses.ResponseBestore;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
