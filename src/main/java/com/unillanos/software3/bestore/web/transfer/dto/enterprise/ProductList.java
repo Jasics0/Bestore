@@ -1,6 +1,6 @@
 package com.unillanos.software3.bestore.web.transfer.dto.enterprise;
 
-import com.unillanos.software3.bestore.model.entities.Product;
+import com.unillanos.software3.bestore.domain.model.entities.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

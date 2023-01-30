@@ -1,6 +1,6 @@
 package com.unillanos.software3.bestore.web.controller.enterprise;
 
-import com.unillanos.software3.bestore.services.interfaces.EnterpriseRepoService;
+import com.unillanos.software3.bestore.domain.services.interfaces.EnterpriseRepoService;
 import com.unillanos.software3.bestore.web.transfer.dto.enterprise.EnterpriseDescDTO;
 import com.unillanos.software3.bestore.web.transfer.dto.enterprise.EnterpriseIdDTO;
 import com.unillanos.software3.bestore.web.transfer.dto.enterprise.EnterpriseProductsDTO;
