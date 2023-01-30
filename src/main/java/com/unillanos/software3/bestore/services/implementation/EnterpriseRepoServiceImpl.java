@@ -4,14 +4,13 @@ import com.unillanos.software3.bestore.model.entities.Product;
 import com.unillanos.software3.bestore.repositories.EnterpriseRepo;
 import com.unillanos.software3.bestore.model.entities.Enterprise;
 import com.unillanos.software3.bestore.services.interfaces.EnterpriseRepoService;
-import com.unillanos.software3.bestore.web.controller.transfer.dto.enterprise.EnterpriseDescDTO;
-import com.unillanos.software3.bestore.web.controller.transfer.dto.enterprise.EnterpriseProductsDTO;
+import com.unillanos.software3.bestore.web.transfer.dto.enterprise.EnterpriseDescDTO;
+import com.unillanos.software3.bestore.web.transfer.dto.enterprise.EnterpriseProductsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class EnterpriseRepoServiceImpl implements EnterpriseRepoService {

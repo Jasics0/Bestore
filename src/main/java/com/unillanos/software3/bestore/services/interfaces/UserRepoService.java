@@ -1,7 +1,7 @@
 package com.unillanos.software3.bestore.services.interfaces;
 
 import com.unillanos.software3.bestore.model.entities.User;
-import com.unillanos.software3.bestore.web.controller.transfer.dto.user.UserDTO;
+import com.unillanos.software3.bestore.web.transfer.dto.user.UserDTO;
 
 import java.util.List;
 
