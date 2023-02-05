@@ -28,7 +28,7 @@ public class UserRepoServiceImpl implements UserRepoService {
         userEntity.setEmail(user.getEmail());
 
         if (user.getPassword().length()<8){
-            throw new IllegalArgumentException("La monda excepcion");
+            throw new IllegalArgumentException("Longitud de constraseña invalida (Mayor que 8 caracteres)");
         }else{
             userEntity.setPassword(user.getPassword());
         }

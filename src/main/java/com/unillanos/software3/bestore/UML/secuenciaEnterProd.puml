@@ -1,0 +1,22 @@
+@startuml
+
+actor User
+participant "EnterpriseController" as Controller
+participant "EnterpriseRepoService" as EntReposervice
+participant "EnterpriseRepoServiceImpl" as EntReposerviceimpl
+participant "EnterpriseRepo" as EntRepo
+participant "Enterprise" as Ent
+
+User -> Controller: POST(id)
+activate Controller
+Controller -> EntReposervice: EnterpriseProducts(id)
+activate EntReposervice
+EntReposervice--> EntReposerviceimpl: search implementation
+activate EntReposerviceimpl
+EntReposerviceimpl --> EntRepo: use JpaRepository
+activate EntRepo
+EntRepo -> Ent : JPQL SENTENCE
+activate Ent
+Ent->Controller: List<EnterpriseProductsDTO> EnterpriseProducts()
+
+@enduml

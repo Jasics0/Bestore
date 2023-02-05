@@ -1,0 +1,33 @@
+@startuml
+
+actor User
+participant "UserController" as Controller
+participant "SecurityConfig" as Config
+participant "UserModel" as UserM
+participant "JWTAthentication" as Ath
+participant "JWTAthorization" as Atho
+
+
+User -> Controller: POST(userName,password)
+activate Controller
+deactivate Controller
+Controller -> Config: securityFilterChain(HttpSecurity http)
+activate Config
+deactivate Config
+Config--> UserM: UserDetailService(UserDetailService detail)
+activate UserM
+deactivate UserM
+UserM --> Ath: CredentialsDTO
+activate Ath
+deactivate Ath
+Ath -> Controller : JWTToken
+activate Controller
+deactivate Controller
+Controller->Atho : OK
+activate Atho
+deactivate Atho
+Atho->Controller : Response
+activate Controller
+Controller->User
+
+@enduml

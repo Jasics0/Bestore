@@ -3,6 +3,7 @@ package com.unillanos.software3.bestore.services.interfaces;
 import com.unillanos.software3.bestore.model.entities.Enterprise;
 import com.unillanos.software3.bestore.web.controller.transfer.dto.enterprise.EnterpriseDescDTO;
 import com.unillanos.software3.bestore.web.controller.transfer.dto.enterprise.EnterpriseProductsDTO;
+import com.unillanos.software3.bestore.web.controller.transfer.dto.enterprise.ProductsEnterpriseByNameDTO;
 import jakarta.websocket.server.PathParam;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.Objects;
 
 public interface EnterpriseRepoService {
 
-    public List<EnterpriseDescDTO> findAllEnterprises();
+    public List<Enterprise> findAllEnterprises();
 
     public Enterprise saveEnterprise(Enterprise enterprise);
 
@@ -23,6 +24,8 @@ public interface EnterpriseRepoService {
     public List<EnterpriseDescDTO> descEnterprises();
 
     public EnterpriseProductsDTO enterpriseProducts( Long id);
+
+    public List<ProductsEnterpriseByNameDTO> ProductsEnterpriseByName(String name);
 
 
 }

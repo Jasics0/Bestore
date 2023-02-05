@@ -10,6 +10,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductList {
-    private List<Product>  products;
+public class ProductsEnterpriseByNameDTO {
+    private String nit;
+    private String name;
+    private String phone;
+    private List<Product> productList;
+
 }

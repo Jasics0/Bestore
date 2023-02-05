@@ -6,6 +6,7 @@ import com.unillanos.software3.bestore.model.entities.Enterprise;
 import com.unillanos.software3.bestore.services.interfaces.EnterpriseRepoService;
 import com.unillanos.software3.bestore.web.controller.transfer.dto.enterprise.EnterpriseDescDTO;
 import com.unillanos.software3.bestore.web.controller.transfer.dto.enterprise.EnterpriseProductsDTO;
+import com.unillanos.software3.bestore.web.controller.transfer.dto.enterprise.ProductsEnterpriseByNameDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,16 +21,10 @@ public class EnterpriseRepoServiceImpl implements EnterpriseRepoService {
     private EnterpriseRepo enterpriseRepo;
 
     @Override
-    public List<EnterpriseDescDTO> findAllEnterprises() {
+    public List<Enterprise> findAllEnterprises() {
         List <Enterprise> enterprises = enterpriseRepo.findAll();
 
-        List<EnterpriseDescDTO> enterpriseDescDTOList = new ArrayList<>();
-        enterprises.forEach((x)->{
-                    EnterpriseDescDTO enterpriseDescDTO = new EnterpriseDescDTO (x.getId(),x.getNit(),x.getName(),x.getImagePath(),x.getPhone());
-                    enterpriseDescDTOList.add(enterpriseDescDTO);
-        }
-        );
-        return enterpriseDescDTOList;
+        return enterprises;
     }
 
     @Override
@@ -105,6 +100,59 @@ public class EnterpriseRepoServiceImpl implements EnterpriseRepoService {
         enterpriseProductsDTO.setProductList(productList);
 
         return enterpriseProductsDTO ;
+    }
+
+    @Override
+    public List<ProductsEnterpriseByNameDTO> ProductsEnterpriseByName(String name) {
+        List<Object[]> enterprises = enterpriseRepo.ProductsEnterpriseByName(name);
+        List<ProductsEnterpriseByNameDTO> listDTO = new ArrayList<>();
+        List <Product> productList = new ArrayList<>();
+        ProductsEnterpriseByNameDTO productsEnterpriseByNameDTO = new ProductsEnterpriseByNameDTO();
+        String nitAct = "";
+        String nitAnt = "";
+        for (int i =0; i<enterprises.size();i++){
+            Object[] array = enterprises.get(i);
+            nitAct = (String) array[0];
+
+            //System.out.println("anterior: "+nitAnt+" actual: "+nitAct);
+            if(!nitAnt.equals(nitAct) && nitAnt.length()!= 0){
+                //System.out.println("diferente");
+                productsEnterpriseByNameDTO.setProductList(productList);
+                listDTO.add(productsEnterpriseByNameDTO);
+
+                productList = new ArrayList<>();
+                productsEnterpriseByNameDTO = new ProductsEnterpriseByNameDTO();
+            }
+
+            if (i==enterprises.size()-1){
+                productsEnterpriseByNameDTO.setProductList(productList);
+                listDTO.add(productsEnterpriseByNameDTO);
+            }
+
+
+            for (int j=0; j<array.length;j++){
+                switch (j){
+                    case 0:
+                        productsEnterpriseByNameDTO.setNit((String) array[0]);
+                        break;
+                    case 1:
+                        productsEnterpriseByNameDTO.setName((String) array[1]);
+                        break;
+                    case 2:
+                        productsEnterpriseByNameDTO.setPhone((String) array[2]);
+                        break;
+                    case 3:
+                        Product product = (Product) array[3];
+                        productList.add(product);
+                        break;
+                }
+            }
+            nitAnt = nitAct;
+
+        }
+
+
+        return listDTO;
     }
 
 

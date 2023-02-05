@@ -20,7 +20,7 @@ public class LoginController {
     @PostMapping(value = "/register", produces = "application/json")
     public ResponseBestore register(@RequestBody UserDTO user, HttpServletResponse response) {
         try {
-            return new ResponseBestore(200,"Monda para",userService.saveUser(user));
+            return new ResponseBestore(200,"Usuario Registrado",userService.saveUser(user));
         }catch (Exception e){
             response.setStatus(500);
             return new ResponseBestore(500,e.getMessage(),null);

@@ -2,9 +2,7 @@ package com.unillanos.software3.bestore.web.controller.enterprise;
 
 import com.unillanos.software3.bestore.model.entities.Enterprise;
 import com.unillanos.software3.bestore.services.interfaces.EnterpriseRepoService;
-import com.unillanos.software3.bestore.web.controller.transfer.dto.enterprise.EnterpriseDescDTO;
-import com.unillanos.software3.bestore.web.controller.transfer.dto.enterprise.EnterpriseIdDTO;
-import com.unillanos.software3.bestore.web.controller.transfer.dto.enterprise.EnterpriseProductsDTO;
+import com.unillanos.software3.bestore.web.controller.transfer.dto.enterprise.*;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,5 +26,11 @@ public class EnterpriseController {
     public EnterpriseProductsDTO getById(@RequestBody EnterpriseIdDTO enterpriseIdDTO){
 
         return enterpriseService.enterpriseProducts(enterpriseIdDTO.getId());
+    }
+
+    @PostMapping (value = "/findProductsByEnterpriseName", produces = "application/json")
+    public List<ProductsEnterpriseByNameDTO> EnterpriseInfoByname(@RequestBody EnterpriseNameDTO enterprise){
+
+        return enterpriseService.ProductsEnterpriseByName(enterprise.getName());
     }
 }
