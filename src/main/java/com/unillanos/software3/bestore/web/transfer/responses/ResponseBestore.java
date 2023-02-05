@@ -1,4 +1,4 @@
-package com.unillanos.software3.bestore.web.controller.transfer.responses;
+package com.unillanos.software3.bestore.web.transfer.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

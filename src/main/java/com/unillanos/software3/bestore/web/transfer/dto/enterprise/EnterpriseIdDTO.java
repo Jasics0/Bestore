@@ -1,4 +1,4 @@
-package com.unillanos.software3.bestore.web.controller.transfer.dto.enterprise;
+package com.unillanos.software3.bestore.web.transfer.dto.enterprise;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

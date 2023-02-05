@@ -1,4 +1,4 @@
-package com.unillanos.software3.bestore.web.controller.transfer.dto.user;
+package com.unillanos.software3.bestore.web.transfer.dto.user;
 
 import lombok.Data;
 
