@@ -1,0 +1,20 @@
+package com.unillanos.software3.bestore.domain.services.interfaces;
+
+import com.unillanos.software3.bestore.domain.model.entities.User;
+import com.unillanos.software3.bestore.web.transfer.dto.user.UserDTO;
+
+import java.util.List;
+
+public interface UserRepoService {
+
+    public List<User> findAllUsers();
+
+    public User saveUser(UserDTO user);
+
+    public User UserById(String id);
+
+    public User UpdateUser(User user);
+
+    public boolean DeleteUser(String id);
+
+}
