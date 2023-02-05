@@ -1,12 +1,16 @@
-package com.unillanos.software3.bestore.services.implementation;
+package com.unillanos.software3.bestore.domain.services.implementation;
 
-import com.unillanos.software3.bestore.model.entities.Product;
-import com.unillanos.software3.bestore.repositories.EnterpriseRepo;
-import com.unillanos.software3.bestore.model.entities.Enterprise;
+
+import com.unillanos.software3.bestore.domain.model.entities.Enterprise;
+
+
+import com.unillanos.software3.bestore.domain.model.entities.Product;
+import com.unillanos.software3.bestore.infraestructure.repositories.EnterpriseRepo;
 import com.unillanos.software3.bestore.services.interfaces.EnterpriseRepoService;
-import com.unillanos.software3.bestore.web.controller.transfer.dto.enterprise.EnterpriseDescDTO;
-import com.unillanos.software3.bestore.web.controller.transfer.dto.enterprise.EnterpriseProductsDTO;
-import com.unillanos.software3.bestore.web.controller.transfer.dto.enterprise.ProductsEnterpriseByNameDTO;
+
+import com.unillanos.software3.bestore.web.transfer.dto.enterprise.EnterpriseDescDTO;
+import com.unillanos.software3.bestore.web.transfer.dto.enterprise.EnterpriseProductsDTO;
+import com.unillanos.software3.bestore.web.transfer.dto.enterprise.ProductsEnterpriseByNameDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +30,7 @@ public class EnterpriseRepoServiceImpl implements EnterpriseRepoService {
 
         return enterprises;
     }
+
 
     @Override
     public Enterprise saveEnterprise(Enterprise enterprise) {
@@ -110,6 +115,7 @@ public class EnterpriseRepoServiceImpl implements EnterpriseRepoService {
         ProductsEnterpriseByNameDTO productsEnterpriseByNameDTO = new ProductsEnterpriseByNameDTO();
         String nitAct = "";
         String nitAnt = "";
+        //System.out.println(enterpriseRepo.findAll().toString());
         for (int i =0; i<enterprises.size();i++){
             Object[] array = enterprises.get(i);
             nitAct = (String) array[0];
