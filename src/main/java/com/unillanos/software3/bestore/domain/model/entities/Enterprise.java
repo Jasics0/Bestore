@@ -2,13 +2,11 @@ package com.unillanos.software3.bestore.domain.model.entities;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 import java.util.List;
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -24,6 +22,12 @@ public class Enterprise {
     private String nit;
     @Column(nullable = false)
     private String name;
+    @Column()
+    private String location;
+    @Column()
+    private String imagePath;
+    @Column(nullable = false,length = 10)
+    private String phone;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Person person;
@@ -34,12 +38,7 @@ public class Enterprise {
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Product> products;
 
-    @Column(nullable = false)
-    private String location;
-    @Column(nullable = false)
-    private String imagePath;
-    @Column(nullable = false,length = 10)
-    private String phone;
+
 
 
 }
