@@ -33,4 +33,10 @@ public class EnterpriseController {
 
         return enterpriseService.ProductsEnterpriseByName(enterprise.getName());
     }
+
+    @PostMapping (value = "/findProductsByName", produces = "application/json")
+    public List<ProductsByNameDTO> ProdusctsByname(@RequestBody ProductNameDTO productNameDTO){
+        System.out.println(productNameDTO.getName());
+        return enterpriseService.ProductsByName(productNameDTO.getName());
+    }
 }

@@ -4,8 +4,10 @@ package com.unillanos.software3.bestore.services.interfaces;
 import com.unillanos.software3.bestore.domain.model.entities.Enterprise;
 import com.unillanos.software3.bestore.web.transfer.dto.enterprise.EnterpriseDescDTO;
 import com.unillanos.software3.bestore.web.transfer.dto.enterprise.EnterpriseProductsDTO;
+import com.unillanos.software3.bestore.web.transfer.dto.enterprise.ProductsByNameDTO;
 import com.unillanos.software3.bestore.web.transfer.dto.enterprise.ProductsEnterpriseByNameDTO;
 import jakarta.websocket.server.PathParam;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Objects;
@@ -27,6 +29,8 @@ public interface EnterpriseRepoService {
     public EnterpriseProductsDTO enterpriseProducts(Long id);
 
     public List<ProductsEnterpriseByNameDTO> ProductsEnterpriseByName(String name);
+
+    public List<ProductsByNameDTO> ProductsByName(String name);
 
 
 }

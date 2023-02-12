@@ -74,7 +74,7 @@ public class AuthServiceImpl implements AuthService {
         if (user.getUpdateDate() == null) {
             try {
                 response.setStatus(200);
-                response.sendRedirect("https://google.com");
+                response.sendRedirect("http://127.0.0.1:5500/templates/userSelection.html?email="+request.getEmail());
             } catch (Exception e) {
                 throw new RuntimeException("Error redirect");
             }
