@@ -37,6 +37,7 @@ public class SiteController {
 
     @PostMapping(value = "/lastStep", produces = "application/json")
     public ResponseBestore lastStep(@RequestBody LastStepRequest request, HttpServletResponse response) {
+        System.out.println("entro");
         try {
             return new ResponseBestore(200,"Registration ends",authService.lastStep(request,response));
         }catch (Exception e){
