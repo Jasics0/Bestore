@@ -7,10 +7,12 @@ import com.unillanos.software3.bestore.web.transfer.responses.AuthenticationResp
 import jakarta.servlet.http.HttpServletResponse;
 
 public interface AuthService {
-    public AuthenticationResponse register(UserDTO request);
+    AuthenticationResponse register(UserDTO request);
 
-    public AuthenticationResponse login(UserDTO request, HttpServletResponse response);
+    AuthenticationResponse login(UserDTO request, HttpServletResponse response);
 
-    public boolean lastStep(LastStepRequest request, HttpServletResponse response);
+    boolean lastStep(LastStepRequest request, HttpServletResponse response);
+
+    User getUser();
 
 }

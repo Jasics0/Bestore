@@ -1,12 +1,13 @@
 package com.unillanos.software3.bestore.domain.services.implementation;
 
-import com.unillanos.software3.bestore.domain.model.entities.Costumer;
+import com.unillanos.software3.bestore.domain.model.entities.Customer;
 import com.unillanos.software3.bestore.domain.model.entities.Enterprise;
 import com.unillanos.software3.bestore.domain.model.entities.Person;
 import com.unillanos.software3.bestore.domain.model.entities.User;
 import com.unillanos.software3.bestore.domain.model.enums.Role;
 import com.unillanos.software3.bestore.domain.services.interfaces.AuthService;
-import com.unillanos.software3.bestore.infraestructure.repositories.CostumerRepo;
+import com.unillanos.software3.bestore.infraestructure.repositories.AdminRepo;
+import com.unillanos.software3.bestore.infraestructure.repositories.CustomerRepo;
 import com.unillanos.software3.bestore.infraestructure.repositories.EnterpriseRepo;
 import com.unillanos.software3.bestore.infraestructure.repositories.UserRepo;
 import com.unillanos.software3.bestore.web.security.config.JwtService;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,14 +30,12 @@ import java.time.LocalDate;
 @Slf4j
 public class AuthServiceImpl implements AuthService {
     private final UserRepo userRepo;
-
     private final EnterpriseRepo enterpriseRepo;
-
+    private final CustomerRepo costumerRepo;
+    private final AdminRepo adminRepo;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-
-    private final CostumerRepo costumerRepo;
 
 
     @Override
@@ -99,7 +99,7 @@ public class AuthServiceImpl implements AuthService {
                     .phone(request.getPerson().getPhone())
                     .build();
 
-            Costumer costumer = new Costumer();
+            Customer costumer = new Customer();
 
             costumer.setUser(user);
             costumer.setPerson(person);
@@ -146,4 +146,15 @@ public class AuthServiceImpl implements AuthService {
         }
         throw new RuntimeException("Error saving user");
     }
+
+    @Override
+    public User getUser() {
+        UsernamePasswordAuthenticationToken authToken = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        if (userRepo.existsByEmail(((User) authToken.getPrincipal()).getEmail())) {
+            User user = userRepo.findByEmail(((User) authToken.getPrincipal()).getEmail()).get();
+            return user;
+        }
+        return null;
+    }
+
 }

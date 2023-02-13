@@ -3,7 +3,6 @@ package com.unillanos.software3.bestore.domain.model.entities;
 import com.unillanos.software3.bestore.domain.model.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.cglib.core.Local;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +18,7 @@ import java.util.List;
 @Getter
 @Table(name = "users")
 @Entity
+@ToString
 public class User implements UserDetails {
     @Id
     @Column(length = 50)

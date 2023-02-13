@@ -2,6 +2,7 @@ package com.unillanos.software3.bestore.infraestructure.repositories;
 
 
 import com.unillanos.software3.bestore.domain.model.entities.Enterprise;
+import com.unillanos.software3.bestore.domain.model.entities.User;
 import com.unillanos.software3.bestore.web.transfer.dto.enterprise.EnterpriseDescDTO;
 import jakarta.websocket.server.PathParam;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,7 +25,7 @@ public interface EnterpriseRepo extends JpaRepository<Enterprise,Long> {
     @Query(value = "select e.nit,e.name,e.phone,e.products from Enterprise e where e.name like CONCAT('%',:nameEnterprise,'%')")
     public List<Object []> ProductsEnterpriseByName(@Param("nameEnterprise") String name);
 
-
+    Enterprise findByUser(User user);
 
 
 }

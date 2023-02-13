@@ -12,6 +12,7 @@ import lombok.*;
 @Setter
 @Getter
 @Entity
+@ToString
 @Table(name = "persons")
 public class Person {
     @Id
