@@ -37,6 +37,13 @@ public class EnterpriseController {
         return enterpriseService.ProductsEnterpriseByName(enterprise.getName());
     }
 
+    @PostMapping (value = "/findProductsByName", produces = "application/json")
+    public List<ProductsByNameDTO> ProdusctsByname(@RequestBody ProductNameDTO productNameDTO){
+        //System.out.println(productNameDTO.getName());
+        return enterpriseService.ProductsByName(productNameDTO.getName());
+    }
+
+
     @PutMapping(value = "/update", produces = "application/json")
     public ResponseBestore updateEnterprise(@RequestBody EnterpriseDTO enterprise, HttpServletResponse response) {
         EnterpriseDTO enterpriseDTO = Mapper.map(enterpriseService.updateEnterprise(enterprise), EnterpriseDTO.class);

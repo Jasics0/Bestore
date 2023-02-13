@@ -8,6 +8,7 @@ import com.unillanos.software3.bestore.domain.services.interfaces.EnterpriseRepo
 import com.unillanos.software3.bestore.infraestructure.repositories.EnterpriseRepo;
 import com.unillanos.software3.bestore.web.transfer.dto.enterprise.EnterpriseDescDTO;
 import com.unillanos.software3.bestore.web.transfer.dto.enterprise.EnterpriseProductsDTO;
+import com.unillanos.software3.bestore.web.transfer.dto.enterprise.ProductsByNameDTO;
 import com.unillanos.software3.bestore.web.transfer.dto.enterprise.ProductsEnterpriseByNameDTO;
 import com.unillanos.software3.bestore.web.transfer.request.EnterpriseDTO;
 import lombok.RequiredArgsConstructor;
@@ -184,6 +185,24 @@ public class EnterpriseRepoServiceImpl implements EnterpriseRepoService {
 
 
         return listDTO;
+    }
+
+    @Override
+    public List<ProductsByNameDTO> ProductsByName(String name) {
+        List<Object[]> results = enterpriseRepo.ProductsByName(name);
+        List<ProductsByNameDTO> productsByNameDTOS = new ArrayList<>();
+        for (Object[] result : results) {
+            String nit = (String) result[0];
+            String enterpriseName = (String) result[1];
+            String phone = (String) result[2];
+            String code = (String) result[3];
+            String productName = (String) result[4];
+            String description = (String) result[5];
+            String price = (String) result[6];
+            String imagePath = (String) result[7];
+            productsByNameDTOS.add(new ProductsByNameDTO(nit, enterpriseName, phone, code, productName, description, price, imagePath));
+        }
+        return productsByNameDTOS;
     }
 
     @Override
