@@ -5,7 +5,10 @@ import com.unillanos.software3.bestore.domain.model.entities.Enterprise;
 import com.unillanos.software3.bestore.domain.model.entities.Product;
 import com.unillanos.software3.bestore.domain.services.interfaces.AuthService;
 import com.unillanos.software3.bestore.domain.services.interfaces.EnterpriseRepoService;
+import com.unillanos.software3.bestore.domain.services.interfaces.ImageService;
 import com.unillanos.software3.bestore.infraestructure.repositories.EnterpriseRepo;
+import com.unillanos.software3.bestore.infraestructure.repositories.ProductRepo;
+import com.unillanos.software3.bestore.web.transfer.dto.ProductDTO;
 import com.unillanos.software3.bestore.web.transfer.dto.enterprise.EnterpriseDescDTO;
 import com.unillanos.software3.bestore.web.transfer.dto.enterprise.EnterpriseProductsDTO;
 import com.unillanos.software3.bestore.web.transfer.dto.enterprise.ProductsByNameDTO;
@@ -13,9 +16,11 @@ import com.unillanos.software3.bestore.web.transfer.dto.enterprise.ProductsEnter
 import com.unillanos.software3.bestore.web.transfer.request.EnterpriseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,12 +28,13 @@ public class EnterpriseRepoServiceImpl implements EnterpriseRepoService {
 
     private final EnterpriseRepo enterpriseRepo;
     private final AuthService authService;
+    private final ImageService imageService;
+
+    private final ProductRepo productRepo;
 
     @Override
     public List<Enterprise> findAllEnterprises() {
-        List<Enterprise> enterprises = enterpriseRepo.findAll();
-
-        return enterprises;
+        return enterpriseRepo.findAll();
     }
 
 
@@ -55,22 +61,76 @@ public class EnterpriseRepoServiceImpl implements EnterpriseRepoService {
         if (enterpriseDTO.getPhone() != null) {
             enterprise.setPhone(enterpriseDTO.getPhone());
         }
-        if(enterpriseDTO.getLocation() != null){
+        if (enterpriseDTO.getLocation() != null) {
             enterprise.setLocation(enterpriseDTO.getLocation());
         }
-        if(enterpriseDTO.getImagePath() != null){
+        if (enterpriseDTO.getImagePath() != null) {
             enterprise.setImagePath(enterpriseDTO.getImagePath());
         }
-        if(enterpriseDTO.getPerson().getName()!=null){
+        if (enterpriseDTO.getPerson().getName() != null) {
             enterprise.getPerson().setName(enterpriseDTO.getPerson().getName());
         }
-        if(enterpriseDTO.getPerson().getLastName()!=null){
+        if (enterpriseDTO.getPerson().getLastName() != null) {
             enterprise.getPerson().setLastName(enterpriseDTO.getPerson().getLastName());
         }
-        if(enterpriseDTO.getPerson().getPhone()!=null){
+        if (enterpriseDTO.getPerson().getPhone() != null) {
             enterprise.getPerson().setPhone(enterpriseDTO.getPerson().getPhone());
         }
         return enterpriseRepo.save(enterprise);
+    }
+
+    @Override
+    public Product addProduct(ProductDTO product, MultipartFile file) {
+        Enterprise enterprise = enterpriseRepo.findByUser(authService.getUser());
+        Product newProduct = new Product();
+        newProduct.setCode(UUID.randomUUID().toString().replace("-", ""));
+        newProduct.setName(product.getName());
+        newProduct.setDescription(product.getDescription());
+        newProduct.setPrice(product.getPrice());
+        String imagePath = imageService.uploadFile("products", file);
+        newProduct.setImagePath(imagePath);
+        List<Product> products = enterprise.getProducts();
+        products.add(newProduct);
+        enterprise.setProducts(products);
+        enterpriseRepo.save(enterprise);
+        return newProduct;
+    }
+
+    @Override
+    public Product updateProduct(ProductDTO product, MultipartFile file) {
+        Product productUpdate = productRepo.findByCode(product.getCode());
+        if (productUpdate != null) {
+            System.out.println(productUpdate.getName());
+            if (product.getName() != null && !product.getName().equals("")) {
+                productUpdate.setName(product.getName());
+            }
+            if (product.getDescription() != null && !product.getDescription().equals("")) {
+                productUpdate.setDescription(product.getDescription());
+            }
+            if (product.getPrice() != null && !product.getPrice().equals(String.valueOf(0)) && !product.getPrice().equals("")) {
+                productUpdate.setPrice(product.getPrice());
+            }
+            if (file != null) {
+                imageService.deleteFile(productUpdate.getImagePath());
+                String imagePath = imageService.uploadFile("products", file);
+                productUpdate.setImagePath(imagePath);
+            }
+            productRepo.save(productUpdate);
+            return productUpdate;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean deleteProduct(String code) {
+        Product product = productRepo.findByCode(code);
+        if (product != null) {
+            imageService.deleteFile(product.getImagePath());
+            productRepo.delete(product);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -95,33 +155,19 @@ public class EnterpriseRepoServiceImpl implements EnterpriseRepoService {
         List<Product> productList = new ArrayList<>();
 
 
-        for (int i = 0; i < enterpriseProducts.size(); i++) {
-            Object[] array = enterpriseProducts.get(i);
+        for (Object[] array : enterpriseProducts) {
             for (int j = 0; j < array.length; j++) {
                 switch (j) {
-
-                    case 0:
-                        enterpriseProductsDTO.setId((Long) array[0]);
-                        break;
-                    case 1:
-                        enterpriseProductsDTO.setNit((String) array[1]);
-                        break;
-                    case 2:
-                        enterpriseProductsDTO.setName((String) array[2]);
-                        break;
-                    case 3:
+                    case 0 -> enterpriseProductsDTO.setId((Long) array[0]);
+                    case 1 -> enterpriseProductsDTO.setNit((String) array[1]);
+                    case 2 -> enterpriseProductsDTO.setName((String) array[2]);
+                    case 3 -> {
                         Product product = (Product) array[3];
                         productList.add(product);
-                        break;
-                    case 4:
-                        enterpriseProductsDTO.setLocation((String) array[4]);
-                        break;
-                    case 5:
-                        enterpriseProductsDTO.setImagePath((String) array[5]);
-                        break;
-                    case 6:
-                        enterpriseProductsDTO.setPhone((String) array[6]);
-                        break;
+                    }
+                    case 4 -> enterpriseProductsDTO.setLocation((String) array[4]);
+                    case 5 -> enterpriseProductsDTO.setImagePath((String) array[5]);
+                    case 6 -> enterpriseProductsDTO.setPhone((String) array[6]);
                 }
             }
 
@@ -134,7 +180,7 @@ public class EnterpriseRepoServiceImpl implements EnterpriseRepoService {
     }
 
     @Override
-    public List<ProductsEnterpriseByNameDTO> ProductsEnterpriseByName(String name) {
+    public List<ProductsEnterpriseByNameDTO> productsEnterpriseByName(String name) {
         List<Object[]> enterprises = enterpriseRepo.ProductsEnterpriseByName(name);
         List<ProductsEnterpriseByNameDTO> listDTO = new ArrayList<>();
         List<Product> productList = new ArrayList<>();
@@ -164,19 +210,13 @@ public class EnterpriseRepoServiceImpl implements EnterpriseRepoService {
 
             for (int j = 0; j < array.length; j++) {
                 switch (j) {
-                    case 0:
-                        productsEnterpriseByNameDTO.setNit((String) array[0]);
-                        break;
-                    case 1:
-                        productsEnterpriseByNameDTO.setName((String) array[1]);
-                        break;
-                    case 2:
-                        productsEnterpriseByNameDTO.setPhone((String) array[2]);
-                        break;
-                    case 3:
+                    case 0 -> productsEnterpriseByNameDTO.setNit((String) array[0]);
+                    case 1 -> productsEnterpriseByNameDTO.setName((String) array[1]);
+                    case 2 -> productsEnterpriseByNameDTO.setPhone((String) array[2]);
+                    case 3 -> {
                         Product product = (Product) array[3];
                         productList.add(product);
-                        break;
+                    }
                 }
             }
             nitAnt = nitAct;
@@ -188,7 +228,7 @@ public class EnterpriseRepoServiceImpl implements EnterpriseRepoService {
     }
 
     @Override
-    public List<ProductsByNameDTO> ProductsByName(String name) {
+    public List<ProductsByNameDTO> productsByName(String name) {
         List<Object[]> results = enterpriseRepo.ProductsByName(name);
         List<ProductsByNameDTO> productsByNameDTOS = new ArrayList<>();
         for (Object[] result : results) {
@@ -208,10 +248,39 @@ public class EnterpriseRepoServiceImpl implements EnterpriseRepoService {
     @Override
     public Enterprise me() {
         Enterprise enterprise = enterpriseRepo.findByUser(authService.getUser());
-        if (enterprise == null) {
-            return null;
-        }
         return enterprise;
 
+    }
+
+    @Override
+    public boolean uploadImage(MultipartFile file) {
+        try {
+            Enterprise enterprise = enterpriseRepo.findByUser(authService.getUser());
+            if (enterprise.getImagePath() != null) {
+                imageService.deleteFile(enterprise.getImagePath());
+            }
+            String pathImage = imageService.uploadFile("enterprises", file);
+            enterprise.setImagePath(pathImage);
+            enterpriseRepo.save(enterprise);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteImage() {
+        try {
+            Enterprise enterprise = enterpriseRepo.findByUser(authService.getUser());
+            String pathImage = enterprise.getImagePath();
+            imageService.deleteFile(pathImage);
+            enterprise.setImagePath(null);
+            enterpriseRepo.save(enterprise);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
