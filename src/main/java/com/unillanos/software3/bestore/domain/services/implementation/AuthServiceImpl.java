@@ -32,7 +32,6 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepo userRepo;
     private final EnterpriseRepo enterpriseRepo;
     private final CustomerRepo costumerRepo;
-    private final AdminRepo adminRepo;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -74,7 +73,7 @@ public class AuthServiceImpl implements AuthService {
         if (user.getUpdateDate() == null) {
             try {
                 response.setStatus(200);
-                response.sendRedirect("http://127.0.0.1:5500/templates/userSelection.html?email="+request.getEmail());
+                response.sendRedirect("https://bestore-unillanos.000webhostapp.com/templates/userSelection.html?email="+request.getEmail());
             } catch (Exception e) {
                 throw new RuntimeException("Error redirect");
             }
@@ -151,8 +150,7 @@ public class AuthServiceImpl implements AuthService {
     public User getUser() {
         UsernamePasswordAuthenticationToken authToken = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         if (userRepo.existsByEmail(((User) authToken.getPrincipal()).getEmail())) {
-            User user = userRepo.findByEmail(((User) authToken.getPrincipal()).getEmail()).get();
-            return user;
+            return userRepo.findByEmail(((User) authToken.getPrincipal()).getEmail()).get();
         }
         return null;
     }
