@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EnterpriseDTO {
+
+    private Long id;
     private String nit;
     private String name;
     private String location;
