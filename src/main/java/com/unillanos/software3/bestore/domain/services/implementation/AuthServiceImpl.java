@@ -75,6 +75,7 @@ public class AuthServiceImpl implements AuthService {
             String redirectUrl = "https://bestore-unillanos.000webhostapp.com/templates/userSelection.html?email=" + request.getEmail();
             response.setStatus(HttpServletResponse.SC_FOUND);
             response.setHeader("Location", redirectUrl);
+            log.info("Response desde el service {}", response);
             response.sendRedirect(redirectUrl);
         }
         var jwtToken = jwtService.generateToken(user);

@@ -6,11 +6,13 @@ import com.unillanos.software3.bestore.web.transfer.request.LastStepRequest;
 import com.unillanos.software3.bestore.web.transfer.responses.ResponseBestore;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/site")
 @RequiredArgsConstructor
+@Slf4j
 public class SiteController {
 
     private final AuthService authService;
@@ -28,6 +30,8 @@ public class SiteController {
     @PostMapping(value = "/login", produces = "application/json")
     public ResponseBestore login(@RequestBody UserDTO user, HttpServletResponse response) {
         try {
+            log.info("User login {}", user);
+            log.info("Login response {}", response);
             return new ResponseBestore(HttpServletResponse.SC_FOUND, "User login success", authService.login(user, response));
         } catch (Exception e) {
             response.setStatus(401);
