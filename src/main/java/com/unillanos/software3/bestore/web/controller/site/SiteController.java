@@ -18,20 +18,20 @@ public class SiteController {
     @PostMapping(value = "/register", produces = "application/json")
     public ResponseBestore register(@RequestBody UserDTO user, HttpServletResponse response) {
         try {
-            return new ResponseBestore(200,"User registered success",authService.register(user));
-        }catch (Exception e){
+            return new ResponseBestore(200, "User registered success", authService.register(user));
+        } catch (Exception e) {
             response.setStatus(401);
-            return new ResponseBestore(401,e.getMessage(),null);
+            return new ResponseBestore(401, e.getMessage(), null);
         }
     }
 
     @PostMapping(value = "/login", produces = "application/json")
     public ResponseBestore login(@RequestBody UserDTO user, HttpServletResponse response) {
         try {
-            return new ResponseBestore(200,"User login success",authService.login(user,response));
-        }catch (Exception e){
+            return new ResponseBestore(HttpServletResponse.SC_FOUND, "User login success", authService.login(user, response));
+        } catch (Exception e) {
             response.setStatus(401);
-            return new ResponseBestore(401,"User no login",null);
+            return new ResponseBestore(401, "User no login", null);
         }
     }
 
@@ -39,10 +39,10 @@ public class SiteController {
     public ResponseBestore lastStep(@RequestBody LastStepRequest request, HttpServletResponse response) {
         System.out.println("entro");
         try {
-            return new ResponseBestore(200,"Registration ends",authService.lastStep(request,response));
-        }catch (Exception e){
+            return new ResponseBestore(200, "Registration ends", authService.lastStep(request, response));
+        } catch (Exception e) {
             response.setStatus(401);
-            return new ResponseBestore(401,"Error in registration",null);
+            return new ResponseBestore(401, "Error in registration", null);
         }
     }
 

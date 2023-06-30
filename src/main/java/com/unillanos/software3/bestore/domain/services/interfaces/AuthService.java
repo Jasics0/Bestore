@@ -6,10 +6,12 @@ import com.unillanos.software3.bestore.web.transfer.request.LastStepRequest;
 import com.unillanos.software3.bestore.web.transfer.responses.AuthenticationResponse;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
+
 public interface AuthService {
     AuthenticationResponse register(UserDTO request);
 
-    AuthenticationResponse login(UserDTO request, HttpServletResponse response);
+    AuthenticationResponse login(UserDTO request, HttpServletResponse response) throws IOException;
 
     boolean lastStep(LastStepRequest request, HttpServletResponse response);
 

@@ -62,7 +62,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public AuthenticationResponse login(UserDTO request, HttpServletResponse response) {
+    public AuthenticationResponse login(UserDTO request, HttpServletResponse response) throws IOException {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -77,6 +77,7 @@ public class AuthServiceImpl implements AuthService {
             // Establece la respuesta HTTP con código de estado de redirección y el encabezado "Location"
             response.setStatus(HttpServletResponse.SC_FOUND);
             response.setHeader("Location", redirectUrl);
+            response.sendRedirect(redirectUrl);
             return null; // Puedes devolver null o simplemente no devolver nada en este caso
         }
         var jwtToken = jwtService.generateToken(user);
