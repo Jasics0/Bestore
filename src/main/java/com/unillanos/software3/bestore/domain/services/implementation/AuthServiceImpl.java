@@ -23,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 @Service
@@ -71,18 +72,19 @@ public class AuthServiceImpl implements AuthService {
         var user = userRepo.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         if (user.getUpdateDate() == null) {
-            try {
-                response.setStatus(200);
-                response.sendRedirect("https://bestore-unillanos.000webhostapp.com/templates/userSelection.html?email="+request.getEmail());
-            } catch (Exception e) {
-                throw new RuntimeException("Error redirect");
-            }
+            // Construye la URL de redirección
+            String redirectUrl = "https://bestore-unillanos.000webhostapp.com/templates/userSelection.html?email=" + request.getEmail();
+            // Establece la respuesta HTTP con código de estado de redirección y el encabezado "Location"
+            response.setStatus(HttpServletResponse.SC_FOUND);
+            response.setHeader("Location", redirectUrl);
+            return null; // Puedes devolver null o simplemente no devolver nada en este caso
         }
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
     }
+
 
     @Override
     public boolean lastStep(LastStepRequest request, HttpServletResponse response) {
