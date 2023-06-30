@@ -73,10 +73,9 @@ public class AuthServiceImpl implements AuthService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         if (user.getUpdateDate() == null) {
             String redirectUrl = "https://bestore-unillanos.000webhostapp.com/templates/userSelection.html?email=" + request.getEmail();
-            response.setStatus(HttpServletResponse.SC_FOUND);
-            response.setHeader("Location", redirectUrl);
-            log.info("Response desde el service {}", response);
-            response.sendRedirect(redirectUrl);
+            return AuthenticationResponse.builder()
+                    .urlRedirect(redirectUrl)
+                    .build();
         }
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
